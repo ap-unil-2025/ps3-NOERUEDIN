@@ -6,7 +6,7 @@ Convert between Celsius and Fahrenheit temperatures.
 def celsius_to_fahrenheit(celsius):
     """
     Convert Celsius to Fahrenheit.
-    Formula: F = (C × 9/5) + 32
+    Formula: F = (C * 9/5) + 32
 
     Args:
         celsius (float): Temperature in Celsius
@@ -14,8 +14,11 @@ def celsius_to_fahrenheit(celsius):
     Returns:
         float: Temperature in Fahrenheit
     """
-    # TODO: Implement this function
-    pass
+    try:
+        c = float(celsius)
+    except (TypeError, ValueError):
+        raise ValueError("celsius must be a number")
+    return (c * 9/5) + 32
 
 
 def fahrenheit_to_celsius(fahrenheit):
@@ -29,8 +32,11 @@ def fahrenheit_to_celsius(fahrenheit):
     Returns:
         float: Temperature in Celsius
     """
-    # TODO: Implement this function
-    pass
+    try:
+        f = float(fahrenheit)
+    except (TypeError, ValueError):
+        raise ValueError("fahrenheit must be a number")
+    return (f - 32) * 5/9
 
 
 def temperature_converter():
@@ -44,14 +50,33 @@ def temperature_converter():
     print("Temperature Converter")
     print("-" * 30)
 
-    # TODO: Implement the interactive converter
-    # Remember to:
-    # - Get temperature value from user
-    # - Get unit (C or F) from user
-    # - Validate input
-    # - Perform conversion
-    # - Display result rounded to 2 decimal places
-    pass
+    while True:
+        val = input("Enter temperature value (or 'q' to quit): ").strip()
+        if val.lower() == 'q':
+            print("Exiting converter.")
+            return
+        try:
+            temp = float(val)
+        except ValueError:
+            print("Invalid temperature. Please enter a numeric value.")
+            continue
+
+        unit = input("Current unit? (C/F): ").strip().lower()
+        if unit not in ('c', 'f'):
+            print("Invalid unit. Enter 'C' for Celsius or 'F' for Fahrenheit.")
+            continue
+
+        if unit == 'c':
+            converted = celsius_to_fahrenheit(temp)
+            print(f"{temp:.2f}°C = {converted:.2f}°F")
+        else:
+            converted = fahrenheit_to_celsius(temp)
+            print(f"{temp:.2f}°F = {converted:.2f}°C")
+
+        again = input("Convert another? (y/n): ").strip().lower()
+        if again != 'y':
+            print("Exiting converter.")
+            return
 
 
 # Test cases (DO NOT MODIFY)
